@@ -1,0 +1,52 @@
+import { isAbsolute, join } from "node:path";
+
+export const openCodeMcpServerName = "openpets";
+export const openPetsCliPackageName = "@open-pets/cli";
+export type OpenCodeCommandMode = "published" | "local" | "bundled";
+
+export interface OpenCodeMcpEntry {
+  readonly type: "local";
+  readonly command: readonly string[];
+  readonly enabled: true;
+}
+
+export interface OpenCodePreviewOptions {
+  readonly cliVersion: string;
+  readonly petId?: string;
+  readonly commandMode?: OpenCodeCommandMode;
+  readonly cliEntryPath?: string;
+}
+
+export function validateOpenPetsPetArg(value: string): string {
+  const trimmed = value.trim();
+  if (trimmed !== value || trimmed.length < 1) throw new Error("Invalid OpenPets pet id.");
+  if (!/^[a-z0-9][a-z0-9_-]{0,63}$/.test(trimmed)) throw new Error("Invalid OpenPets pet id.");
+  return trimmed;
+}
+
+export function buildOpenCodeMcpEntry(options: OpenCodePreviewOptions): OpenCodeMcpEntry {
+  const petArgs = options.petId === undefined ? [] : ["--pet", validateOpenPetsPetArg(options.petId)];
+  const mode = options.commandMode ?? "published";
+  if (mode === "local" || mode === "bundled") {
+    if (!options.cliEntryPath || !isAbsolute(options.cliEntryPath)) throw new Error("OpenCode local MCP preview requires an absolute CLI entry path.");
+    return { type: "local", command: ["node", options.cliEntryPath, "mcp", ...petArgs], enabled: true };
+  }
+  return { type: "local", command: ["npx", "-y", `${openPetsCliPackageName}@${options.cliVersion}`, "mcp", ...petArgs], enabled: true };
+}
+
+export function buildOpenCodeInstructionPath(scope: "project" | "global", configDir?: string): string {
+  if (scope === "project") return ".opencode/openpets.md";
+  if (!configDir) throw new Error("Global OpenCode instruction path requires config directory.");
+  return join(configDir, "openpets.md");
+}
+
+export type OpenCodePluginSpec = string | readonly [string, { readonly pet?: string }];
+
+export function buildOpenCodePluginPreview(petId?: string, packageVersion?: string): OpenCodePluginSpec {
+  const spec = packageVersion ? `@open-pets/opencode@${packageVersion}` : "@open-pets/opencode";
+  return petId === undefined ? spec : [spec, { pet: validateOpenPetsPetArg(petId) }];
+}
+
+export function formatOpenCodeMcpConfig(options: OpenCodePreviewOptions): Record<string, unknown> {
+  return { mcp: { [openCodeMcpServerName]: buildOpenCodeMcpEntry(options) } };
+}
