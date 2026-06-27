@@ -3,6 +3,16 @@
 </p>
 
 <p align="center">
+  <strong>小灰狼桌宠 — 定制版本</strong>
+</p>
+
+<p align="center">
+  本项目基于 <a href="https://github.com/alvinunreal/openpets">OpenPets</a> 定制。<br />
+</p>
+
+---
+
+<p align="center">
   <strong>A desktop companion platform with pets, plugins, and optional local agent integrations.</strong>
 </p>
 

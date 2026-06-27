@@ -1,12 +1,12 @@
 appId: dev.openpets.app
-productName: OpenPets
+productName: 小灰狼桌宠
 executableName: openpets
 copyright: Copyright © 2026 OpenPets
 
 directories:
   output: dist-electron
 
-artifactName: OpenPets-${version}-${os}-${arch}.${ext}
+artifactName: 小灰狼桌宠-${version}-${os}-${arch}.${ext}
 
 files:
   - dist/**
@@ -52,13 +52,13 @@ win:
   verifyUpdateCodeSignature: false
 
 nsis:
-  artifactName: OpenPets-${version}-win-${arch}-setup.${ext}
+  artifactName: 小灰狼桌宠-${version}-win-${arch}-setup.${ext}
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
 
 portable:
-  artifactName: OpenPets-${version}-win-${arch}-portable.${ext}
+  artifactName: 小灰狼桌宠-${version}-win-${arch}-portable.${ext}
 
 linux:
   icon: assets/app-icon.png
