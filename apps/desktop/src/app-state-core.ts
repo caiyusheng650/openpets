@@ -10,7 +10,7 @@ export const petScaleOptions = [
   { label: "Huge", value: 1.5 },
 ] as const;
 export type PetScaleValue = typeof petScaleOptions[number]["value"];
-export const defaultPetScale: PetScaleValue = 1;
+export const defaultPetScale: PetScaleValue = 0.5;
 
 export function normalizePetScale(value: unknown): PetScaleValue {
   return petScaleOptions.find((option) => option.value === value)?.value ?? defaultPetScale;

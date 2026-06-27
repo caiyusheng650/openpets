@@ -8,7 +8,7 @@ import { refreshAgentPetContent } from "./agent-pet-controller.js";
 import { getAppStateSnapshot, getDesktopAnalyticsConsentState, normalizePetPoolOrder, petScaleOptions, setDesktopAnalyticsConsent, setPetPoolOrder, updatePreferences } from "./app-state.js";
 import { applyRoamingToAllPets } from "./pet-roaming-controller.js";
 import { classifyAnalyticsError, trackDesktopAnalyticsConsentChanged, trackDesktopEvent } from "./analytics.js";
-import { createAppIcon } from "./assets.js";
+import { createAppIcon,createTrayIcon } from "./assets.js";
 import { getCatalogPageUiState, getCatalogSearchUiState, getCatalogUiState } from "./catalog.js";
 import { getCodexPetsUiState, importCodexPet, readCodexPetSpritesheet } from "./codex-pets.js";
 import { setConfinementEnabled } from "./confinement-manager.js";
@@ -55,7 +55,7 @@ function syncDockVisibilityForInternalUi(): void {
     const delayMs = elapsedSinceHide < dockHideShowCooldownMs ? dockHideShowCooldownMs - elapsedSinceHide : 0;
     pendingDockTimer = setTimeout(() => {
       pendingDockTimer = null;
-      dock.setIcon(createAppIcon());
+      dock.setIcon(createTrayIcon());
       dock.show();
     }, delayMs);
   } else {
@@ -718,13 +718,13 @@ export function openControlCenterWindow(route: ControlCenterRoute = "dashboard")
   trackDesktopEvent("desktop_control_center_opened", { route: safeRoute, entrypoint: "create_window" });
 
   const window = new BrowserWindow({
-    title: "OpenPets — Control Center",
+    title: "小灰狼桌宠控制中心",
+    icon: createTrayIcon(),
     width: 1180,
     height: 820,
     minWidth: 820,
     minHeight: 620,
     show: false,
-    icon: createAppIcon(),
     backgroundColor: "#f8fbff",
     webPreferences: {
       nodeIntegration: false,

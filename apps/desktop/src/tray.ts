@@ -18,7 +18,7 @@ export function createAppTray(): Tray {
   }
 
   tray = new Tray(createTrayIcon());
-  tray.setToolTip("OpenPets");
+  tray.setToolTip("小灰狼桌宠");
   refreshTrayMenu();
   info("tray", "created");
   console.log("OpenPets tray created.");
@@ -37,7 +37,7 @@ export function refreshTrayMenu(): void {
 
   const menu = Menu.buildFromTemplate([
     {
-      label: "OpenPets",
+      label: "小灰狼",
       enabled: false,
     },
     ...createUpdateMenuItems(),
@@ -90,10 +90,6 @@ export function refreshTrayMenu(): void {
       click: () => openControlCenterWindow("settings"),
     },
     { type: "separator" },
-    {
-      label: t("tray.website"),
-      click: () => { void shell.openExternal("https://openpets.dev/"); },
-    },
     {
       label: t("tray.openLogsFolder"),
       click: () => { void openLogsFolder(); },

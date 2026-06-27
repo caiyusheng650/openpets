@@ -24,11 +24,11 @@ export const defaultReactionToSpriteState = {
   working: "running",
   editing: "running",
   running: "running",
-  testing: "waiting",
-  waiting: "waiting",
-  waving: "waving",
+  testing: "running",
+  waiting: "running",
+  waving: "failed",
   success: "jumping",
-  error: "failed",
+  error: "review",
   celebrating: "jumping",
 } as const satisfies Record<OpenPetsReaction, UserSelectableAnimationState>;
 

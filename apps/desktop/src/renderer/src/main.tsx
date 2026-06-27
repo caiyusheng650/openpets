@@ -501,9 +501,7 @@ function DashboardView({ onNavigate }: { onNavigate: (route: Route) => void }) {
         <div className="dashboard-hero-content">
           <p className="eyebrow !text-blue-100 opacity-80">{t("dashboard.hero.eyebrow")}</p>
           <h2 className="dashboard-hero-title">{defaultPet.displayName}</h2>
-          <p className="dashboard-hero-desc">
-            {t("dashboard.hero.desc")}
-          </p>
+
           <div className="flex gap-3 mt-3">
             <Button variant="secondary" size="compact" onClick={() => onNavigate("pets")}>{t("dashboard.hero.changePet")}</Button>
           </div>
@@ -513,57 +511,41 @@ function DashboardView({ onNavigate }: { onNavigate: (route: Route) => void }) {
         </div>
       </section>
 
-      <div className="dashboard-grid">
-        <article className="dashboard-stat-card">
-          <div className="dashboard-stat-header">
-            <div className="dashboard-stat-icon"><MessageIcon /></div>
-            <span className="dashboard-stat-label">{t("dashboard.stat.messages")}</span>
-          </div>
-          <div className="dashboard-stat-value">{activity.messagesSent.toLocaleString()}</div>
-          <div className="dashboard-stat-footer">{t("dashboard.stat.messages.footer")}</div>
-        </article>
-
-        <article className="dashboard-stat-card">
-          <div className="dashboard-stat-header">
-            <div className="dashboard-stat-icon"><HeartIcon /></div>
-            <span className="dashboard-stat-label">{t("dashboard.stat.reactions")}</span>
-          </div>
-          <div className="dashboard-stat-value">{activity.reactionsSent.toLocaleString()}</div>
-          <div className="dashboard-stat-footer">{t("dashboard.stat.reactions.footer")}</div>
-        </article>
-
-        <article className="dashboard-stat-card">
-          <div className="dashboard-stat-header">
-            <div className="dashboard-stat-icon"><StarIcon /></div>
-            <span className="dashboard-stat-label">{t("dashboard.stat.topCompanion")}</span>
-          </div>
-          <div className="dashboard-stat-value truncate text-2xl">{topPetName}</div>
-          <div className="dashboard-stat-footer">{t("dashboard.stat.topCompanion.footer")}</div>
-        </article>
-      </div>
-
-      <div className="dashboard-row">
-        <GlassCard className="dashboard-activity-card">
-          <div className="dashboard-section-title"><ActivityIcon /> {t("dashboard.activity.title")}</div>
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-              <span className="text-[10px] font-bold text-slatecopy uppercase tracking-wider">{t("dashboard.activity.topReactions")}</span>
-              <div className="dashboard-reaction-list">
-                {reactionEntries.length > 0 ? (
-                  reactionEntries.slice(0, 6)
-                    .map(([label, count]) => (
-                      <div key={label} className="dashboard-reaction-item">
-                        <span className="dashboard-reaction-count">{count}</span>
-                        <span className="dashboard-reaction-label">{label}</span>
-                      </div>
-                    ))
-                ) : (
-                  <div className="text-xs text-slatecopy italic py-2">{t("dashboard.activity.noReactions")}</div>
-                )}
-              </div>
+      <GlassCard className="dashboard-content-card">
+        <div className="dashboard-grid">
+          <article className="dashboard-stat-card">
+            <div className="dashboard-stat-header">
+              <div className="dashboard-stat-icon"><MessageIcon /></div>
+              <span className="dashboard-stat-label">{t("dashboard.stat.messages")}</span>
             </div>
+            <div className="dashboard-stat-value">{activity.messagesSent.toLocaleString()}</div>
+            <div className="dashboard-stat-footer">{t("dashboard.stat.messages.footer")}</div>
+          </article>
 
-            <div className="dashboard-activity-charts">
+          <article className="dashboard-stat-card">
+            <div className="dashboard-stat-header">
+              <div className="dashboard-stat-icon"><HeartIcon /></div>
+              <span className="dashboard-stat-label">{t("dashboard.stat.reactions")}</span>
+            </div>
+            <div className="dashboard-stat-value">{activity.reactionsSent.toLocaleString()}</div>
+            <div className="dashboard-stat-footer">{t("dashboard.stat.reactions.footer")}</div>
+          </article>
+
+          <article className="dashboard-stat-card">
+            <div className="dashboard-stat-header">
+              <div className="dashboard-stat-icon"><StarIcon /></div>
+              <span className="dashboard-stat-label">{t("dashboard.stat.topCompanion")}</span>
+            </div>
+            <div className="dashboard-stat-value truncate text-2xl">{topPetName}</div>
+            <div className="dashboard-stat-footer">{t("dashboard.stat.topCompanion.footer")}</div>
+          </article>
+        </div>
+
+        <div className="dashboard-row">
+          <div className="dashboard-activity-card">
+            <div className="dashboard-section-title"><ActivityIcon /> {t("dashboard.activity.title")}</div>
+            
+            <div className="dashboard-charts-row">
               <section className="dashboard-chart-panel dashboard-reaction-mix">
                 <div className="dashboard-chart-heading">
                   <span>{t("dashboard.reactionMix.title")}</span>
@@ -590,7 +572,7 @@ function DashboardView({ onNavigate }: { onNavigate: (route: Route) => void }) {
                     {reactionDonutSegments.length ? reactionDonutSegments.map((segment) => (
                       <div key={segment.label} className="dashboard-donut-legend-item">
                         <span className="dashboard-donut-dot" style={{ background: segment.color }} />
-                        <span>{segment.label}</span>
+                        <span>{t(`dashboard.reaction.${segment.label}`)}</span>
                         <strong>{segment.count}</strong>
                       </div>
                     )) : <p>{t("dashboard.reactionMix.empty")}</p>}
@@ -618,61 +600,44 @@ function DashboardView({ onNavigate }: { onNavigate: (route: Route) => void }) {
                   }) : <p className="dashboard-empty-note">{t("dashboard.companions.empty")}</p>}
                 </div>
               </section>
-
-              <div className="dashboard-last-active-pill">{t("dashboard.lastActive.label")}<strong>{lastActiveLabel}</strong></div>
             </div>
-          </div>
-        </GlassCard>
 
-        <GlassCard className="dashboard-system-card">
-          <div className="dashboard-section-title"><ZapIcon /> {t("dashboard.system.title")}</div>
-          <div className="dashboard-system-list">
-            <div className="dashboard-system-item">
-              <div className="dashboard-system-info">
+            <div className="dashboard-last-active-pill">{t("dashboard.lastActive.label")}<strong>{lastActiveLabel}</strong></div>
+          </div>
+
+          <div className="dashboard-system-card">
+            <div className="dashboard-section-title"><ZapIcon /> {t("dashboard.system.title")}</div>
+            <div className="dashboard-system-grid">
+              <article className="dashboard-system-item-card">
                 <div className="dashboard-system-icon"><BoxIcon /></div>
-                <span className="dashboard-system-label">{t("dashboard.system.pets")}</span>
-              </div>
-              <span className="dashboard-system-value">{t("dashboard.system.pets.value", { count: installedPetCount })}</span>
-            </div>
+                <div className="dashboard-system-item-content">
+                  <span className="dashboard-system-item-label">{t("dashboard.system.pets")}</span>
+                  <span className="dashboard-system-item-value">{t("dashboard.system.pets.value", { count: installedPetCount })}</span>
+                </div>
+              </article>
 
-            <div className="dashboard-system-item">
-              <div className="dashboard-system-info">
+              <article className="dashboard-system-item-card">
                 <div className="dashboard-system-icon"><PluginGlyph className="w-4 h-4" /></div>
-                <span className="dashboard-system-label">{t("dashboard.system.plugins")}</span>
-              </div>
-              <div className="flex gap-1.5">
-                <StatusPill tone="green">{t("dashboard.system.plugins.enabled", { count: plugins.enabled })}</StatusPill>
-                {plugins.broken > 0 && <StatusPill tone="red">{plugins.broken}</StatusPill>}
-              </div>
-            </div>
+                <div className="dashboard-system-item-content">
+                  <span className="dashboard-system-item-label">{t("dashboard.system.plugins")}</span>
+                  <span className="dashboard-system-item-value flex gap-1.5 items-center">
+                    {t("dashboard.system.plugins.enabled", { count: plugins.enabled })}
+                    {plugins.broken > 0 && <StatusPill tone="red">{plugins.broken}</StatusPill>}
+                  </span>
+                </div>
+              </article>
 
-            <div className="dashboard-system-item">
-              <div className="dashboard-system-info">
+              <article className="dashboard-system-item-card">
                 <div className="dashboard-system-icon"><StarIcon /></div>
-                <span className="dashboard-system-label">{t("dashboard.system.catalog")}</span>
-              </div>
-              <span className="dashboard-system-value">{catalog.error ? t("dashboard.system.catalog.offline") : catalog.total ? t("dashboard.system.catalog.pets", { count: catalog.total }) : t("dashboard.system.catalog.ready")}</span>
-            </div>
-
-            <div className="dashboard-system-item">
-              <div className="dashboard-system-info">
-                <div className="dashboard-system-icon"><ShieldIcon /></div>
-                <span className="dashboard-system-label">{t("dashboard.system.updates")}</span>
-              </div>
-              <StatusPill tone={updateStatus.state === "available" ? "orange" : "blue"}>
-                {updateLabel}
-              </StatusPill>
+                <div className="dashboard-system-item-content">
+                  <span className="dashboard-system-item-label">{t("dashboard.system.catalog")}</span>
+                  <span className="dashboard-system-item-value">{catalog.error ? t("dashboard.system.catalog.offline") : catalog.total ? t("dashboard.system.catalog.pets", { count: catalog.total }) : t("dashboard.system.catalog.ready")}</span>
+                </div>
+              </article>
             </div>
           </div>
-
-          <div className="mt-auto pt-4 border-t border-blue-100/30">
-             <div className="flex items-center justify-between text-[10px] font-bold text-slatecopy uppercase tracking-wider">
-               <span>{t("dashboard.system.version")}</span>
-               <span className="font-mono">{updateStatus.currentVersion}</span>
-             </div>
-          </div>
-        </GlassCard>
-      </div>
+        </div>
+      </GlassCard>
     </div>
   );
 }
@@ -1159,295 +1124,280 @@ function SettingsView() {
     {error && <div className="error settings-message">{error}</div>}
     {message && <div className="settings-success settings-message">{message}</div>}
 
-    <div className="settings-container">
-      <aside className="settings-sidebar">
-        <button className={`settings-nav-item ${activeTab === "general" ? "active" : ""}`} onClick={() => setActiveTab("general")}>
-          <SettingsIcon />
-          <span>{t("settings.nav.general")}</span>
-        </button>
-        <button className={`settings-nav-item ${activeTab === "reactions" ? "active" : ""}`} onClick={() => setActiveTab("reactions")}>
-          <PetsIcon />
-          <span>{t("settings.nav.reactions")}</span>
-        </button>
-        <button className={`settings-nav-item ${activeTab === "plugins" ? "active" : ""}`} onClick={() => setActiveTab("plugins")}>
-          <PluginsIcon />
-          <span>{t("settings.nav.plugins")}</span>
-        </button>
-        <button className={`settings-nav-item ${activeTab === "lan" ? "active" : ""}`} onClick={() => setActiveTab("lan")}>
-          <IntegrationsIcon />
-          <span>{t("settings.nav.lan")}</span>
-        </button>
-      </aside>
+    <GlassCard className="settings-content-card">
+      <div className="settings-container">
+        <aside className="settings-sidebar">
+          <button className={`settings-nav-item ${activeTab === "general" ? "active" : ""}`} onClick={() => setActiveTab("general")}>
+            <SettingsIcon />
+            <span>{t("settings.nav.general")}</span>
+          </button>
+          <button className={`settings-nav-item ${activeTab === "reactions" ? "active" : ""}`} onClick={() => setActiveTab("reactions")}>
+            <PetsIcon />
+            <span>{t("settings.nav.reactions")}</span>
+          </button>
+          <button className={`settings-nav-item ${activeTab === "plugins" ? "active" : ""}`} onClick={() => setActiveTab("plugins")}>
+            <PluginsIcon />
+            <span>{t("settings.nav.plugins")}</span>
+          </button>
+          <button className={`settings-nav-item ${activeTab === "lan" ? "active" : ""}`} onClick={() => setActiveTab("lan")}>
+            <IntegrationsIcon />
+            <span>{t("settings.nav.lan")}</span>
+          </button>
+        </aside>
 
-      <main className="settings-content">
-        {activeTab === "general" && (
-          <>
-            <div className="settings-section">
-              <p className="eyebrow">{t("settings.general.eyebrow")}</p>
-              <h2 className="settings-section-title">{t("settings.general.title")}</h2>
+        <main className="settings-content">
+          {activeTab === "general" && (
+            <>
+              <div className="settings-section">
+                <p className="eyebrow">{t("settings.general.eyebrow")}</p>
+                <h2 className="settings-section-title">{t("settings.general.title")}</h2>
 
-              <div className="settings-group">
-                <ToggleRow
-                  title={t("settings.general.showOnLaunch.title")}
-                  description={t("settings.general.showOnLaunch.description")}
-                  checked={settings?.preferences.openDefaultPetOnLaunch ?? false}
-                  disabled={!settings || !!busy}
-                  onChange={(checked) => patchPreferences({ openDefaultPetOnLaunch: checked }, t("settings.toast.startupSaved"))}
-                />
-                <ToggleRow
-                  title={t("settings.general.launchAtLogin.title")}
-                  description={launchAtLogin?.supported ? t("settings.general.launchAtLogin.supported") : t("settings.general.launchAtLogin.unsupported")}
-                  checked={launchAtLogin?.enabled ?? false}
-                  disabled={!launchAtLogin?.supported || !!busy}
-                  onChange={(checked) => void run(t("settings.busy.saving"), async () => { setLaunchAtLogin(await api.setLaunchAtLogin(checked)); setMessage(t("settings.toast.loginStartupSaved")); })}
-                />
-                <ToggleRow
-                  title={t("settings.general.analytics.title")}
-                  description={t("settings.general.analytics.description")}
-                  checked={settings?.analytics.enabled ?? false}
-                  disabled={!settings || !!busy}
-                  onChange={setAnalyticsConsent}
-                />
-                <div className="settings-row">
-                  <div className="settings-row-info">
-                    <strong>{t("settings.general.petScale.title")}</strong>
-                    <small>{t("settings.general.petScale.description")}</small>
+                <div className="settings-group">
+                  <ToggleRow
+                    title={t("settings.general.showOnLaunch.title")}
+                    description={t("settings.general.showOnLaunch.description")}
+                    checked={settings?.preferences.openDefaultPetOnLaunch ?? false}
+                    disabled={!settings || !!busy}
+                    onChange={(checked) => patchPreferences({ openDefaultPetOnLaunch: checked }, t("settings.toast.startupSaved"))}
+                  />
+                  <ToggleRow
+                    title={t("settings.general.launchAtLogin.title")}
+                    description={launchAtLogin?.supported ? t("settings.general.launchAtLogin.supported") : t("settings.general.launchAtLogin.unsupported")}
+                    checked={launchAtLogin?.enabled ?? false}
+                    disabled={!launchAtLogin?.supported || !!busy}
+                    onChange={(checked) => void run(t("settings.busy.saving"), async () => { setLaunchAtLogin(await api.setLaunchAtLogin(checked)); setMessage(t("settings.toast.loginStartupSaved")); })}
+                  />
+                  <ToggleRow
+                    title={t("settings.general.analytics.title")}
+                    description={t("settings.general.analytics.description")}
+                    checked={settings?.analytics.enabled ?? false}
+                    disabled={!settings || !!busy}
+                    onChange={setAnalyticsConsent}
+                  />
+                  <div className="settings-row">
+                    <div className="settings-row-info">
+                      <strong>{t("settings.general.petScale.title")}</strong>
+                      <small>{t("settings.general.petScale.description")}</small>
+                    </div>
+                    <select className="settings-select" value={settings?.preferences.petScale ?? ""} disabled={!settings || !!busy} onChange={(event) => patchPreferences({ petScale: Number(event.target.value) }, t("settings.toast.petScaleSaved"))}>
+                      {(settings?.petScaleOptions ?? []).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                    </select>
                   </div>
-                  <select className="settings-select" value={settings?.preferences.petScale ?? ""} disabled={!settings || !!busy} onChange={(event) => patchPreferences({ petScale: Number(event.target.value) }, t("settings.toast.petScaleSaved"))}>
-                    {(settings?.petScaleOptions ?? []).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                  </select>
+                  <div className="settings-row">
+                    <div className="settings-row-info">
+                      <strong>{t("settings.language.title")}</strong>
+                      <small>{t("settings.language.description")}</small>
+                    </div>
+                    <select className="settings-select" value={localePreference} disabled={!!busy} onChange={(event) => changeLocale(event.target.value)}>
+                      <option value="system">{t("settings.language.system")}</option>
+                      {availableLocales.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                    </select>
+                  </div>
                 </div>
-                <div className="settings-row">
-                  <div className="settings-row-info">
-                    <strong>{t("settings.language.title")}</strong>
-                    <small>{t("settings.language.description")}</small>
+
+                <div className="settings-group">
+                  <ToggleRow
+                    title={t("settings.petPool.label")}
+                    description={t("settings.petPool.description")}
+                    checked={settings?.preferences.petPoolEnabled ?? false}
+                    disabled={!settings || !!busy}
+                    onChange={(checked) => patchPreferences({ petPoolEnabled: checked }, t("settings.toast.petPoolSaved"))}
+                  />
+                  <div className={settings?.preferences.petPoolEnabled ? "" : "opacity-50 pointer-events-none"}>
+                    <PetPoolOrderList
+                      order={settings?.preferences.petPoolOrder ?? []}
+                      candidates={settings?.petPoolCandidates ?? []}
+                      disabled={!settings || !!busy || !(settings?.preferences.petPoolEnabled)}
+                      onChangeOrder={updatePetPoolOrder}
+                    />
                   </div>
-                  <select className="settings-select" value={localePreference} disabled={!!busy} onChange={(event) => changeLocale(event.target.value)}>
-                    <option value="system">{t("settings.language.system")}</option>
-                    {availableLocales.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-                  </select>
+                </div>
+
+                <div className="settings-actions">
+                  <Button variant="secondary" size="compact" disabled={!!busy} onClick={() => void run(t("settings.busy.resetting"), async () => { setSettings(await api.resetDefaultPetPosition()); setMessage(t("settings.toast.positionReset")); })}>{t("settings.general.resetPosition")}</Button>
                 </div>
               </div>
 
-              <div className="settings-group">
-                <ToggleRow
-                  title={t("settings.petPool.label")}
-                  description={t("settings.petPool.description")}
-                  checked={settings?.preferences.petPoolEnabled ?? false}
-                  disabled={!settings || !!busy}
-                  onChange={(checked) => patchPreferences({ petPoolEnabled: checked }, t("settings.toast.petPoolSaved"))}
-                />
-                <div className={settings?.preferences.petPoolEnabled ? "" : "opacity-50 pointer-events-none"}>
-                  <PetPoolOrderList
-                    order={settings?.preferences.petPoolOrder ?? []}
-                    candidates={settings?.petPoolCandidates ?? []}
-                    disabled={!settings || !!busy || !(settings?.preferences.petPoolEnabled)}
-                    onChangeOrder={updatePetPoolOrder}
+              <div className="settings-section">
+                <h2 className="settings-section-title">{t("settings.movement.title")}</h2>
+
+                <div className="settings-group">
+                  <ToggleRow
+                    title={t("settings.petConfinement.label")}
+                    description={t("settings.petConfinement.description")}
+                    checked={settings?.preferences.petConfinementEnabled ?? false}
+                    disabled={!settings || !!busy}
+                    testId="setting-pet-confinement-toggle"
+                    onChange={(checked) => patchPreferences({ petConfinementEnabled: checked }, t("settings.toast.confinementSaved"))}
+                  />
+                  <ToggleRow
+                    title={t("settings.petCrossDisplay.label")}
+                    description={isMoverActive ? t("settings.petCrossDisplay.description") : t("settings.petCrossDisplay.helperNoMover")}
+                    checked={settings?.preferences.petCrossDisplayEnabled ?? false}
+                    disabled={!settings || !!busy || !isMoverActive}
+                    testId="setting-pet-cross-display-toggle"
+                    onChange={(checked) => patchPreferences({ petCrossDisplayEnabled: checked }, t("settings.toast.crossDisplaySaved"))}
+                  />
+                  <ToggleRow
+                    title={t("settings.petGravity.label")}
+                    description={t("settings.petGravity.description")}
+                    checked={settings?.preferences.petGravityEnabled ?? false}
+                    disabled={!settings || !!busy}
+                    testId="setting-pet-gravity-toggle"
+                    onChange={(checked) => patchPreferences({ petGravityEnabled: checked }, t("settings.toast.gravitySaved"))}
                   />
                 </div>
               </div>
+            </>
+          )}
 
-              <div className="settings-actions">
-                <Button variant="secondary" size="compact" disabled={!!busy} onClick={() => void run(t("settings.busy.resetting"), async () => { setSettings(await api.resetDefaultPetPosition()); setMessage(t("settings.toast.positionReset")); })}>{t("settings.general.resetPosition")}</Button>
-              </div>
-
-              <div className="settings-system-footer">
-                <div className="settings-system-info">
-                  <RefreshIcon />
-                  <span>{t("settings.general.systemStatus")}</span>
-                  <span className="settings-system-version">{updateStatus?.currentVersion}</span>
-                  <span className="opacity-60">{formatUpdateStatus(updateStatus, t)}</span>
+          {activeTab === "reactions" && (
+            <div className="settings-section">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="eyebrow">{t("settings.reactions.eyebrow")}</p>
+                  <h2 className="settings-section-title">{t("settings.reactions.title")}</h2>
                 </div>
-                <div className="flex gap-2">
-                  {updateStatus?.state === "available" && (
-                    <Button variant="primary" size="compact" disabled={!!busy} onClick={() => void run(t("settings.busy.opening"), async () => { await api.openUpdateReleasePage(); })}>{t("settings.general.updateAvailable")}</Button>
-                  )}
-                  <Button variant="secondary" size="compact" disabled={!!busy || updateStatus?.state === "checking"} onClick={() => void run(t("settings.busy.checking"), async () => { setUpdateStatus(await api.checkForUpdates()); })}>
-                    {busy === t("settings.busy.checking") ? t("settings.general.checking") : t("settings.general.checkForUpdates")}
-                  </Button>
+                <Button variant="secondary" size="compact" disabled={!settings || !!busy || !Object.keys(overrides).length} onClick={() => patchPreferences({ reactionAnimationOverrides: {} }, t("settings.toast.reactionsReset"))}>{t("settings.reactions.resetDefaults")}</Button>
+              </div>
+              <p className="text-sm text-slatecopy -mt-2 mb-2">{t("settings.reactions.description")}</p>
+
+              <div className="settings-group">
+                <div className="reaction-grid">
+                  {(reactionSettings?.reactions ?? []).map((reaction) => {
+                    const currentAnimation = overrides[reaction.id] ?? reaction.defaultAnimation;
+                    return (
+                      <div className="reaction-row" key={reaction.id}>
+                        <div className="reaction-preview-box">
+                          {reactionSettings?.previewSpriteUrl && (
+                            <ReactionPreviewSprite settings={reactionSettings} state={currentAnimation} />
+                          )}
+                        </div>
+                        <div className="reaction-info">
+                          <strong>{reaction.label}</strong>
+                          <small>{reaction.description}</small>
+                        </div>
+                        <select
+                          className="settings-select"
+                          value={currentAnimation}
+                          disabled={!reactionSettings || !settings || !!busy}
+                          onChange={(event) => {
+                            const value = event.target.value as UserSelectableAnimationState;
+                            updateReactionOverride(reaction, value);
+                          }}
+                        >
+                          {(reactionSettings?.animations ?? []).map((animation) => (
+                            <option key={animation.id} value={animation.id}>{animation.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
+          )}
 
+
+          {activeTab === "lan" && (
+            <LanSettingsPanel status={lanStatus} onRefresh={() => void run(t("settings.busy.checking"), async () => { setLanStatus(await api.getLanStatus()); })} busy={!!busy} />
+          )}
+
+          {activeTab === "plugins" && (
             <div className="settings-section">
-              <h2 className="settings-section-title">{t("settings.movement.title")}</h2>
+              <p className="eyebrow">{t("settings.plugins.eyebrow")}</p>
+              <h2 className="settings-section-title">{t("settings.plugins.title")}</h2>
+              <p className="text-sm text-slatecopy -mt-2 mb-2">{t("settings.plugins.description")}</p>
 
               <div className="settings-group">
                 <ToggleRow
-                  title={t("settings.petConfinement.label")}
-                  description={t("settings.petConfinement.description")}
-                  checked={settings?.preferences.petConfinementEnabled ?? false}
-                  disabled={!settings || !!busy}
-                  testId="setting-pet-confinement-toggle"
-                  onChange={(checked) => patchPreferences({ petConfinementEnabled: checked }, t("settings.toast.confinementSaved"))}
+                  title={t("settings.plugins.audio.title")}
+                  description={t("settings.plugins.audio.description")}
+                  checked={platformSettings?.allowPluginAudio ?? true}
+                  disabled={!platformSettings || !!busy}
+                  onChange={(checked) => patchPlatformSettings({ allowPluginAudio: checked }, t("settings.toast.audioSaved"))}
                 />
                 <ToggleRow
-                  title={t("settings.petCrossDisplay.label")}
-                  description={isMoverActive ? t("settings.petCrossDisplay.description") : t("settings.petCrossDisplay.helperNoMover")}
-                  checked={settings?.preferences.petCrossDisplayEnabled ?? false}
-                  disabled={!settings || !!busy || !isMoverActive}
-                  testId="setting-pet-cross-display-toggle"
-                  onChange={(checked) => patchPreferences({ petCrossDisplayEnabled: checked }, t("settings.toast.crossDisplaySaved"))}
+                  title={t("settings.plugins.voice.title")}
+                  description={t("settings.plugins.voice.description")}
+                  checked={platformSettings?.allowPluginVoice ?? true}
+                  disabled={!platformSettings || !!busy}
+                  onChange={(checked) => patchPlatformSettings({ allowPluginVoice: checked }, t("settings.toast.voiceSaved"))}
                 />
                 <ToggleRow
-                  title={t("settings.petGravity.label")}
-                  description={t("settings.petGravity.description")}
-                  checked={settings?.preferences.petGravityEnabled ?? false}
-                  disabled={!settings || !!busy}
-                  testId="setting-pet-gravity-toggle"
-                  onChange={(checked) => patchPreferences({ petGravityEnabled: checked }, t("settings.toast.gravitySaved"))}
+                  title={t("settings.plugins.dynamicSpeech.title")}
+                  description={t("settings.plugins.dynamicSpeech.description")}
+                  checked={platformSettings?.allowDynamicSpeech ?? false}
+                  disabled={!platformSettings || !!busy}
+                  onChange={(checked) => patchPlatformSettings({ allowDynamicSpeech: checked }, t("settings.toast.dynamicSpeechSaved"))}
+                />
+                <ToggleRow
+                  title={t("settings.plugins.microphone.title")}
+                  description={t("settings.plugins.microphone.description")}
+                  checked={platformSettings?.allowMicrophone ?? false}
+                  disabled={!platformSettings || !!busy}
+                  onChange={(checked) => patchPlatformSettings({ allowMicrophone: checked }, t("settings.toast.microphoneSaved"))}
                 />
               </div>
-            </div>
-          </>
-        )}
 
-        {activeTab === "reactions" && (
-          <div className="settings-section">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="eyebrow">{t("settings.reactions.eyebrow")}</p>
-                <h2 className="settings-section-title">{t("settings.reactions.title")}</h2>
-              </div>
-              <Button variant="secondary" size="compact" disabled={!settings || !!busy || !Object.keys(overrides).length} onClick={() => patchPreferences({ reactionAnimationOverrides: {} }, t("settings.toast.reactionsReset"))}>{t("settings.reactions.resetDefaults")}</Button>
-            </div>
-            <p className="text-sm text-slatecopy -mt-2 mb-2">{t("settings.reactions.description")}</p>
-
-            <div className="settings-group">
-              <div className="reaction-grid">
-                {(reactionSettings?.reactions ?? []).map((reaction) => {
-                  const currentAnimation = overrides[reaction.id] ?? reaction.defaultAnimation;
-                  return (
-                    <div className="reaction-row" key={reaction.id}>
-                      <div className="reaction-preview-box">
-                        {reactionSettings?.previewSpriteUrl && (
-                          <ReactionPreviewSprite settings={reactionSettings} state={currentAnimation} />
-                        )}
-                      </div>
-                      <div className="reaction-info">
-                        <strong>{reaction.label}</strong>
-                        <small>{reaction.description}</small>
-                      </div>
-                      <select
-                        className="settings-select"
-                        value={currentAnimation}
-                        disabled={!reactionSettings || !settings || !!busy}
-                        onChange={(event) => {
-                          const value = event.target.value as UserSelectableAnimationState;
-                          updateReactionOverride(reaction, value);
-                        }}
-                      >
-                        {(reactionSettings?.animations ?? []).map((animation) => (
-                          <option key={animation.id} value={animation.id}>{animation.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-
-        {activeTab === "lan" && (
-          <LanSettingsPanel status={lanStatus} onRefresh={() => void run(t("settings.busy.checking"), async () => { setLanStatus(await api.getLanStatus()); })} busy={!!busy} />
-        )}
-
-        {activeTab === "plugins" && (
-          <div className="settings-section">
-            <p className="eyebrow">{t("settings.plugins.eyebrow")}</p>
-            <h2 className="settings-section-title">{t("settings.plugins.title")}</h2>
-            <p className="text-sm text-slatecopy -mt-2 mb-2">{t("settings.plugins.description")}</p>
-
-            <div className="settings-group">
-              <ToggleRow
-                title={t("settings.plugins.audio.title")}
-                description={t("settings.plugins.audio.description")}
-                checked={platformSettings?.allowPluginAudio ?? true}
-                disabled={!platformSettings || !!busy}
-                onChange={(checked) => patchPlatformSettings({ allowPluginAudio: checked }, t("settings.toast.audioSaved"))}
-              />
-              <ToggleRow
-                title={t("settings.plugins.voice.title")}
-                description={t("settings.plugins.voice.description")}
-                checked={platformSettings?.allowPluginVoice ?? true}
-                disabled={!platformSettings || !!busy}
-                onChange={(checked) => patchPlatformSettings({ allowPluginVoice: checked }, t("settings.toast.voiceSaved"))}
-              />
-              <ToggleRow
-                title={t("settings.plugins.dynamicSpeech.title")}
-                description={t("settings.plugins.dynamicSpeech.description")}
-                checked={platformSettings?.allowDynamicSpeech ?? false}
-                disabled={!platformSettings || !!busy}
-                onChange={(checked) => patchPlatformSettings({ allowDynamicSpeech: checked }, t("settings.toast.dynamicSpeechSaved"))}
-              />
-              <ToggleRow
-                title={t("settings.plugins.microphone.title")}
-                description={t("settings.plugins.microphone.description")}
-                checked={platformSettings?.allowMicrophone ?? false}
-                disabled={!platformSettings || !!busy}
-                onChange={(checked) => patchPlatformSettings({ allowMicrophone: checked }, t("settings.toast.microphoneSaved"))}
-              />
-            </div>
-
-            <div className="settings-group">
-              <ToggleRow
-                title={t("settings.plugins.quietHours.title")}
-                description={t("settings.plugins.quietHours.description")}
-                checked={platformSettings?.quietHours.enabled ?? false}
-                disabled={!platformSettings || !!busy}
-                onChange={(checked) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { start: "22:00", end: "08:00" }), enabled: checked } }, t("settings.toast.quietHoursSaved"))}
-              />
-              <div className="settings-row">
-                <div className="settings-row-info">
-                  <strong>{t("settings.plugins.quietWindow.title")}</strong>
-                  <small>{t("settings.plugins.quietWindow.description")}</small>
+              <div className="settings-group">
+                <ToggleRow
+                  title={t("settings.plugins.quietHours.title")}
+                  description={t("settings.plugins.quietHours.description")}
+                  checked={platformSettings?.quietHours.enabled ?? false}
+                  disabled={!platformSettings || !!busy}
+                  onChange={(checked) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { start: "22:00", end: "08:00" }), enabled: checked } }, t("settings.toast.quietHoursSaved"))}
+                />
+                <div className="settings-row">
+                  <div className="settings-row-info">
+                    <strong>{t("settings.plugins.quietWindow.title")}</strong>
+                    <small>{t("settings.plugins.quietWindow.description")}</small>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <input type="time" className="settings-select" value={platformSettings?.quietHours.start ?? "22:00"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { enabled: false, end: "08:00" }), start: event.target.value } as PluginPlatformSettings["quietHours"] }, t("settings.toast.quietHoursSaved"))} />
+                    <span className="opacity-60">{t("common.to")}</span>
+                    <input type="time" className="settings-select" value={platformSettings?.quietHours.end ?? "08:00"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { enabled: false, start: "22:00" }), end: event.target.value } as PluginPlatformSettings["quietHours"] }, t("settings.toast.quietHoursSaved"))} />
+                  </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                  <input type="time" className="settings-select" value={platformSettings?.quietHours.start ?? "22:00"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { enabled: false, end: "08:00" }), start: event.target.value } as PluginPlatformSettings["quietHours"] }, t("settings.toast.quietHoursSaved"))} />
-                  <span className="opacity-60">{t("common.to")}</span>
-                  <input type="time" className="settings-select" value={platformSettings?.quietHours.end ?? "08:00"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ quietHours: { ...(platformSettings?.quietHours ?? { enabled: false, start: "22:00" }), end: event.target.value } as PluginPlatformSettings["quietHours"] }, t("settings.toast.quietHoursSaved"))} />
+              </div>
+
+              <div className="settings-group">
+                <div className="settings-row">
+                  <div className="settings-row-info">
+                    <strong>{t("settings.plugins.aiProvider.title")}</strong>
+                    <small>{t("settings.plugins.aiProvider.description")}</small>
+                  </div>
+                  <select className="settings-select" value={platformSettings?.ai.provider ?? "none"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ ai: { ...(platformSettings?.ai ?? { model: "" }), provider: event.target.value as PluginPlatformSettings["ai"]["provider"] } }, t("settings.toast.aiProviderSaved"))}>
+                    <option value="none">{t("settings.plugins.aiProvider.disabled")}</option>
+                    <option value="anthropic">{t("settings.plugins.aiProvider.anthropic")}</option>
+                    <option value="openai">{t("settings.plugins.aiProvider.openai")}</option>
+                    <option value="ollama">{t("settings.plugins.aiProvider.ollama")}</option>
+                  </select>
+                </div>
+                <div className="settings-row">
+                  <div className="settings-row-info">
+                    <strong>{t("settings.plugins.model.title")}</strong>
+                    <small>{t("settings.plugins.model.description")}</small>
+                  </div>
+                  <input type="text" className="settings-select" placeholder={t("settings.plugins.model.placeholder")} defaultValue={platformSettings?.ai.model ?? ""} disabled={!platformSettings || !!busy} onBlur={(event) => { if (event.target.value !== (platformSettings?.ai.model ?? "")) patchPlatformSettings({ ai: { ...(platformSettings?.ai ?? { provider: "none" }), model: event.target.value } as PluginPlatformSettings["ai"] }, t("settings.toast.aiModelSaved")); }} />
+                </div>
+                <div className="settings-row">
+                  <div className="settings-row-info">
+                    <strong>{t("settings.plugins.apiKey.title")}</strong>
+                    <small>{aiKeyStatus.hasKey ? t("settings.plugins.apiKey.stored") : t("settings.plugins.apiKey.none")}</small>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <input type="password" className="settings-select" placeholder={aiKeyStatus.hasKey ? t("settings.plugins.apiKey.placeholderStored") : t("settings.plugins.apiKey.placeholderEmpty")} value={aiKeyDraft} disabled={!!busy} onChange={(event) => setAiKeyDraft(event.target.value)} />
+                    <Button variant="secondary" size="compact" disabled={!!busy || !aiKeyDraft} onClick={() => void run(t("settings.busy.saving"), async () => { setAiKeyStatus(await api.setPluginAiApiKey(aiKeyDraft)); setAiKeyDraft(""); setMessage(t("settings.toast.aiKeySaved")); })}>{t("settings.plugins.apiKey.save")}</Button>
+                    {aiKeyStatus.hasKey && <Button variant="secondary" size="compact" disabled={!!busy} onClick={() => void run(t("settings.busy.saving"), async () => { setAiKeyStatus(await api.setPluginAiApiKey(null)); setMessage(t("settings.toast.aiKeyRemoved")); })}>{t("settings.plugins.apiKey.remove")}</Button>}
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div className="settings-group">
-              <div className="settings-row">
-                <div className="settings-row-info">
-                  <strong>{t("settings.plugins.aiProvider.title")}</strong>
-                  <small>{t("settings.plugins.aiProvider.description")}</small>
-                </div>
-                <select className="settings-select" value={platformSettings?.ai.provider ?? "none"} disabled={!platformSettings || !!busy} onChange={(event) => patchPlatformSettings({ ai: { ...(platformSettings?.ai ?? { model: "" }), provider: event.target.value as PluginPlatformSettings["ai"]["provider"] } }, t("settings.toast.aiProviderSaved"))}>
-                  <option value="none">{t("settings.plugins.aiProvider.disabled")}</option>
-                  <option value="anthropic">{t("settings.plugins.aiProvider.anthropic")}</option>
-                  <option value="openai">{t("settings.plugins.aiProvider.openai")}</option>
-                  <option value="ollama">{t("settings.plugins.aiProvider.ollama")}</option>
-                </select>
-              </div>
-              <div className="settings-row">
-                <div className="settings-row-info">
-                  <strong>{t("settings.plugins.model.title")}</strong>
-                  <small>{t("settings.plugins.model.description")}</small>
-                </div>
-                <input type="text" className="settings-select" placeholder={t("settings.plugins.model.placeholder")} defaultValue={platformSettings?.ai.model ?? ""} disabled={!platformSettings || !!busy} onBlur={(event) => { if (event.target.value !== (platformSettings?.ai.model ?? "")) patchPlatformSettings({ ai: { ...(platformSettings?.ai ?? { provider: "none" }), model: event.target.value } as PluginPlatformSettings["ai"] }, t("settings.toast.aiModelSaved")); }} />
-              </div>
-              <div className="settings-row">
-                <div className="settings-row-info">
-                  <strong>{t("settings.plugins.apiKey.title")}</strong>
-                  <small>{aiKeyStatus.hasKey ? t("settings.plugins.apiKey.stored") : t("settings.plugins.apiKey.none")}</small>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <input type="password" className="settings-select" placeholder={aiKeyStatus.hasKey ? t("settings.plugins.apiKey.placeholderStored") : t("settings.plugins.apiKey.placeholderEmpty")} value={aiKeyDraft} disabled={!!busy} onChange={(event) => setAiKeyDraft(event.target.value)} />
-                  <Button variant="secondary" size="compact" disabled={!!busy || !aiKeyDraft} onClick={() => void run(t("settings.busy.saving"), async () => { setAiKeyStatus(await api.setPluginAiApiKey(aiKeyDraft)); setAiKeyDraft(""); setMessage(t("settings.toast.aiKeySaved")); })}>{t("settings.plugins.apiKey.save")}</Button>
-                  {aiKeyStatus.hasKey && <Button variant="secondary" size="compact" disabled={!!busy} onClick={() => void run(t("settings.busy.saving"), async () => { setAiKeyStatus(await api.setPluginAiApiKey(null)); setMessage(t("settings.toast.aiKeyRemoved")); })}>{t("settings.plugins.apiKey.remove")}</Button>}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
+    </GlassCard>
   </div>;
 }
 
@@ -2025,55 +1975,57 @@ function IntegrationsView() {
   const selectedIntegrationName = selectedId === "pi" ? t("integrations.pi.name") : integrations.find((item) => item.id === selectedId)?.name;
 
   return (
-    <div className="flex flex-col gap-6 h-full overflow-y-auto pr-2">
+    <div className="integrations-layout">
       {error && <div className="error">{error}</div>}
       {message && <div className="settings-success settings-message">{message}</div>}
 
-      <div className="integration-grid">
-        {integrations.map((item) => (
-          <article key={item.id} className={`integration-card ${selectedId === item.id ? "border-brand ring-4 ring-brand/15" : ""}`}>
-            <div className="plugin-card-body">
-              <div className="integration-icon">
-                <IntegrationIcon id={item.icon} />
-              </div>
-              <div className="plugin-card-content">
-                <div className="flex items-center justify-between">
-                  <strong>{item.name}</strong>
-                  <StatusPill tone={item.tone}>{item.status}</StatusPill>
+      <GlassCard className="integrations-content-card">
+        <div className="integration-grid">
+          {integrations.map((item) => (
+            <article key={item.id} className={`integration-card ${selectedId === item.id ? "border-brand ring-4 ring-brand/15" : ""}`}>
+              <div className="plugin-card-body">
+                <div className="integration-icon">
+                  <IntegrationIcon id={item.icon} />
                 </div>
-                <small>{item.description}</small>
-              </div>
-            </div>
-            <div className="plugin-card-footer">
-              <div className="flex gap-2 w-full">
-                {item.id === "claude" && snapshot.status.canConfigure && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "configure")}>{t("integrations.install")}</Button>}
-                {item.id === "opencode" && snapshot.opencodeStatus.canInstall && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "opencode-install")}>{t("integrations.install")}</Button>}
-                {item.id === "cursor" && snapshot.cursorStatus.canInstall && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "cursor-install")}>{t("integrations.install")}</Button>}
-                <Button variant="secondary" size="compact" icon={<ConfigureIcon />} fullWidth={item.id === "pi"} onClick={() => setSelectedId(item.id)}>{item.id === "pi" ? t("integrations.viewSetup") : t("integrations.configure")}</Button>
-              </div>
-            </div>
-          </article>
-        ))}
-        {soon.map((item) => (
-          <article key={item.name} className="integration-card opacity-60">
-            <div className="plugin-card-body">
-              <div className="integration-icon grayscale">
-                <IntegrationIcon id={item.icon} />
-              </div>
-              <div className="plugin-card-content">
-                <div className="flex items-center justify-between">
-                  <strong>{item.name}</strong>
-                  <StatusPill tone="slate">{t("integrations.soon.status")}</StatusPill>
+                <div className="plugin-card-content">
+                  <div className="flex items-center justify-between">
+                    <strong>{item.name}</strong>
+                    <StatusPill tone={item.tone}>{item.status}</StatusPill>
+                  </div>
+                  <small>{item.description}</small>
                 </div>
-                <small>{t("integrations.soon.description")}</small>
               </div>
-            </div>
-            <div className="plugin-card-footer">
-              <Button variant="secondary" size="compact" fullWidth disabled>{t("integrations.soon.button")}</Button>
-            </div>
-          </article>
-        ))}
-      </div>
+              <div className="plugin-card-footer">
+                <div className="flex gap-2 w-full">
+                  {item.id === "claude" && snapshot.status.canConfigure && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "configure")}>{t("integrations.install")}</Button>}
+                  {item.id === "opencode" && snapshot.opencodeStatus.canInstall && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "opencode-install")}>{t("integrations.install")}</Button>}
+                  {item.id === "cursor" && snapshot.cursorStatus.canInstall && <Button variant="primary" size="compact" icon={<InstallIcon />} disabled={isBusy} onClick={() => run(t("integrations.busy.installing"), "cursor-install")}>{t("integrations.install")}</Button>}
+                  <Button variant="secondary" size="compact" icon={<ConfigureIcon />} fullWidth={item.id === "pi"} onClick={() => setSelectedId(item.id)}>{item.id === "pi" ? t("integrations.viewSetup") : t("integrations.configure")}</Button>
+                </div>
+              </div>
+            </article>
+          ))}
+          {soon.map((item) => (
+            <article key={item.name} className="integration-card opacity-60">
+              <div className="plugin-card-body">
+                <div className="integration-icon grayscale">
+                  <IntegrationIcon id={item.icon} />
+                </div>
+                <div className="plugin-card-content">
+                  <div className="flex items-center justify-between">
+                    <strong>{item.name}</strong>
+                    <StatusPill tone="slate">{t("integrations.soon.status")}</StatusPill>
+                  </div>
+                  <small>{t("integrations.soon.description")}</small>
+                </div>
+              </div>
+              <div className="plugin-card-footer">
+                <Button variant="secondary" size="compact" fullWidth disabled>{t("integrations.soon.button")}</Button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </GlassCard>
 
       {selectedId && (
         <div className="plugin-config-overlay" role="dialog" aria-modal="true" aria-labelledby={integrationDialogTitleId}>
@@ -2441,22 +2393,7 @@ function PluginsView() {
     <div className="plugins-layout">
       {error && <div className="error settings-message">{error}</div>}
       {message && <div className="settings-success settings-message">{message}</div>}
-      <div className={`plugin-developer-panel ${showDeveloperMode ? "open" : ""}`}>
-        <button className="plugin-developer-toggle" type="button" onClick={() => setShowDeveloperMode((open) => !open)} aria-expanded={showDeveloperMode}>
-          <span>{t("plugins.developer.eyebrow")}</span>
-          <small>{showDeveloperMode ? t("plugins.developer.hide") : t("plugins.developer.show")}</small>
-        </button>
-        {showDeveloperMode && <div className="plugin-developer-body">
-          <p>{t("plugins.developer.description")}</p>
-          <Button variant="secondary" size="compact" icon={<FolderPlusIcon />} disabled={!!busy} onClick={() => void run(t("plugins.busy.loading"), async () => {
-            const beforeIds = new Set(snapshot?.plugins.map((plugin) => plugin.id) ?? []);
-            const result = await api.loadLocalPlugin();
-            if (!applyResult(result)) return;
-            const loadedPlugin = result.snapshot.plugins.find((plugin) => plugin.source === "local" && !beforeIds.has(plugin.id));
-            setMessage(loadedPlugin ? t("plugins.toast.localLoaded") : t("plugins.toast.noLocalLoaded"));
-          })}>{t("plugins.developer.loadUnpacked")}</Button>
-        </div>}
-      </div>
+
       <GlassCard className="plugins-hub">
         <div className="filters">
           {(["all", "installed", "catalog", "local", "broken"] as PluginFilter[]).map((nextFilter) => (
@@ -2854,7 +2791,6 @@ function ControlCenter() {
     <main className="app-shell">
       <header className="hero">
         <div className="hero-content">
-          <p className="eyebrow">{t("app.controlCenter")}</p>
           <h1>{t(currentMeta.titleKey)}</h1>
           <p className="hero-desc">{t(currentMeta.descKey)}</p>
         </div>

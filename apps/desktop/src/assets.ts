@@ -7,7 +7,9 @@ const appIconRelativePath = join("assets", "app-icon.png");
 let cachedAppIcon: NativeImage | null = null;
 
 export function createAppIcon(): NativeImage {
-  if (cachedAppIcon && !cachedAppIcon.isEmpty()) return cachedAppIcon;
+  if (cachedAppIcon && !cachedAppIcon.isEmpty()) {
+    return cachedAppIcon;
+  }
 
   const assetPath = join(app.getAppPath(), appIconRelativePath);
   const assetImage = nativeImage.createFromPath(assetPath);

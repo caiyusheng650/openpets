@@ -1,6 +1,6 @@
 export const builtInPet = {
   id: "builtin",
-  displayName: "Professor Hoot",
+  displayName: "小灰狼",
   builtIn: true,
   protected: true,
   installed: true,
