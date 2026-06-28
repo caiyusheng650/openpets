@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/openpets.png" alt="OpenPets desktop companion platform" width="100%" />
+  <img src="assets/logo.png" alt="小灰狼桌宠" width="100%" />
 </p>
 
 <p align="center">
-  <strong>小灰狼桌宠 — 定制版本</strong>
+  <strong>小灰狼桌宠</strong>
 </p>
 
 <p align="center">

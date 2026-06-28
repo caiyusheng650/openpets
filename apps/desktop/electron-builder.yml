@@ -52,13 +52,13 @@ win:
   verifyUpdateCodeSignature: false
 
 nsis:
-  artifactName: 小灰狼桌宠-${version}-win-${arch}-setup.${ext}
+  artifactName: 小灰狼桌宠-win-${arch}-setup.${ext}
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
 
 portable:
-  artifactName: 小灰狼桌宠-${version}-win-${arch}-portable.${ext}
+  artifactName: 小灰狼桌宠-win-${arch}-portable.${ext}
 
 linux:
   icon: assets/app-icon.png
