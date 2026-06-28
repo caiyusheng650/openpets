@@ -39,6 +39,25 @@
 
 ---
 
+## ⚠️ 声明
+
+**本软件为粉丝非官方自制，与 EDG 战队无关。EDGZOO 小灰狼形象版权归 EDG 电子竞技俱乐部所有。**
+
+---
+
+## 🐺 下载小灰狼桌宠
+
+> EDGZOO小灰狼 桌面宠物 | 粉丝自制非官方
+
+**快速下载链接**：
+
+| 版本 | 下载链接 |
+|------|----------|
+| 便携版 | [EDGZOO-WOLF-win-x64-portable.exe](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO-WOLF-win-x64-portable.exe) |
+| 安装版 | [EDGZOO-WOLF-win-x64-setup.exe](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO-WOLF-win-x64-setup.exe) |
+
+---
+
 ## Download OpenPets
 
 **[Download the latest OpenPets desktop release](https://github.com/alvinunreal/openpets/releases/latest)** and launch it. A pet appears immediately; no agent setup required.
