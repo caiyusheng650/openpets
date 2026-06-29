@@ -497,20 +497,6 @@ function DashboardView({ onNavigate }: { onNavigate: (route: Route) => void }) {
     <div className="dashboard-layout">
       {error && <div className="error">{error}</div>}
 
-      <section className="dashboard-hero">
-        <div className="dashboard-hero-content">
-          <p className="eyebrow !text-blue-100 opacity-80">{t("dashboard.hero.eyebrow")}</p>
-          <h2 className="dashboard-hero-title">{defaultPet.displayName}</h2>
-
-          <div className="flex gap-3 mt-3">
-            <Button variant="secondary" size="compact" onClick={() => onNavigate("pets")}>{t("dashboard.hero.changePet")}</Button>
-          </div>
-        </div>
-        <div className="dashboard-hero-pet">
-          <SpriteFrame src={defaultPet.previewSpriteUrl} label={defaultPet.displayName} state="idle" size="detail" />
-        </div>
-      </section>
-
       <GlassCard className="dashboard-content-card">
         <div className="dashboard-grid">
           <article className="dashboard-stat-card">

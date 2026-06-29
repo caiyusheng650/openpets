@@ -10,6 +10,7 @@
   ::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.45); }
 }
 @layer components {
+  .scroll-area { @apply overflow-y-auto pr-2.5 pb-4; overscroll-behavior: contain; scrollbar-color: rgba(96, 165, 250, 0.25) transparent; scrollbar-gutter: stable; }
   .app-shell { @apply mx-auto flex h-screen max-w-[1160px] flex-col p-6; }
   .hero { @apply mb-6 flex items-center justify-between gap-6; }
   .hero-content { @apply flex flex-col justify-center; }
@@ -40,7 +41,7 @@
   .filter.active .filter-icon-wrapper { @apply opacity-100; }
   .filter-icon { @apply h-3.5 w-3.5 stroke-[2.5]; }
   .pager { @apply mt-3 flex items-center justify-between gap-2.5 rounded-xl border border-blue-200/40 bg-blue-50/20 p-1.5 text-xs font-bold text-slatecopy; }
-  .pets-grid { @apply grid min-h-0 flex-1 grid-cols-2 gap-3 overflow-y-auto p-1.5 pr-2.5 pb-3; overscroll-behavior: contain; scrollbar-color: rgba(96, 165, 250, 0.42) transparent; }
+  .pets-grid { @apply grid min-h-0 flex-1 grid-cols-2 gap-3 p-1.5 scroll-area; }
   .pet-card { @apply relative flex flex-row items-start gap-3.5 rounded-2xl border border-slate-200 bg-white/80 p-3 text-left shadow-sm transition-[transform,border-color,background-color,box-shadow] hover:-translate-y-0.5 hover:border-brand hover:bg-white min-h-[138px] w-full; }
   .pet-card.selected { @apply border-brand bg-blue-50/90 ring-4 ring-blue-200/50 shadow-md; }
   .pet-card-actions { @apply relative z-10 mt-2 grid grid-cols-3 gap-1.5; }
@@ -53,7 +54,7 @@
   .card-desc { @apply text-xs text-slatecopy line-clamp-1 m-0; }
   .badges { @apply flex flex-wrap gap-1 mt-1; }
   .pill { @apply inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 font-sans text-[11px] font-semibold text-slatecopy/90 border border-transparent select-none; } .pill-blue { @apply bg-blue-50 border border-blue-100/50 text-blue-700; } .pill-green { @apply bg-emerald-50 border border-emerald-100/50 text-emerald-700; } .pill-orange { @apply bg-amber-50 border border-amber-100/50 text-amber-700; } .pill-purple { @apply bg-purple-50 border border-purple-100/60 text-purple-700; } .pill-yellow { @apply bg-yellow-100 border border-yellow-200/70 text-yellow-900; } .pill-red { @apply bg-red-50 border border-red-100/50 text-red-700; } .pill-slate { @apply bg-slate-50 border border-slate-200 text-slate-600; }
-  .detail { @apply flex min-h-0 flex-col overflow-y-auto pr-2; overscroll-behavior: contain; }
+  .detail { @apply flex min-h-0 flex-col scroll-area; }
   .detail h2 { @apply m-0 font-monoDisplay text-3xl font-black; } .desc { @apply text-slatecopy; } .stage { @apply my-5 grid min-h-72 place-items-center overflow-hidden rounded-[32px] border border-blue-100 bg-[radial-gradient(circle_at_center,rgba(59,150,255,.18),rgba(255,255,255,.74)_55%,rgba(239,247,255,.9))]; } .stage img { @apply max-h-56 max-w-64 object-contain [image-rendering:auto]; }
   .sprite-frame { display: block; flex: 0 0 auto; overflow: hidden; image-rendering: auto; }
   .sprite-frame image { pointer-events: none; user-select: none; }
@@ -94,8 +95,8 @@
   .settings-layout { @apply flex flex-col gap-6 min-h-0 h-full; }
   .settings-content-card { @apply flex-1 min-h-0 overflow-hidden; }
   .settings-container { @apply grid grid-cols-[280px_1fr] gap-6 min-h-0 h-full; }
-  .settings-sidebar { @apply flex flex-col gap-2 overflow-y-auto pr-1 pb-4; overscroll-behavior: contain; }
-  .settings-content { @apply flex flex-col gap-6 overflow-y-auto pr-2 pb-8; overscroll-behavior: contain; }
+  .settings-sidebar { @apply flex flex-col gap-2 scroll-area; }
+  .settings-content { @apply flex flex-col gap-6 scroll-area; }
   .settings-nav-item { @apply flex items-center gap-3 px-4 py-3 rounded-2xl border border-transparent text-sm font-bold text-slatecopy transition-[transform,background-color,border-color,box-shadow,color] duration-150 cursor-pointer select-none; }
   .settings-nav-item:hover { @apply bg-white/50 text-brand border-blue-100/50; }
   .settings-nav-item.active { @apply bg-white text-brand border-blue-200 shadow-sm ring-4 ring-blue-100/30; }
@@ -153,7 +154,7 @@
   .plugin-developer-toggle small { @apply text-[10px] font-black uppercase tracking-wider text-brand; }
   .plugin-developer-body { @apply mt-2 flex items-center justify-between gap-3 border-t border-blue-100/60 pt-2; }
   .plugin-developer-body p { @apply m-0 max-w-2xl text-xs font-semibold leading-snug text-slatecopy/80; }
-  .plugin-grid { @apply grid min-h-0 flex-1 grid-cols-2 items-start content-start gap-3.5 overflow-y-auto p-1.5 pr-2.5 pb-3 max-[850px]:grid-cols-1; grid-auto-rows: max-content; overscroll-behavior: contain; }
+  .plugin-grid { @apply grid min-h-0 flex-1 grid-cols-2 items-start content-start gap-3.5 p-1.5 max-[850px]:grid-cols-1 scroll-area; grid-auto-rows: max-content; }
   .plugin-card { @apply flex w-full flex-col rounded-2xl border border-slate-200 bg-white/80 p-0 text-left shadow-sm transition-[border-color,background-color,box-shadow]; }
   .plugin-card:hover { @apply border-brand/40 bg-white; }
   .plugin-card.broken { @apply border-red-200 bg-red-50/60; }
@@ -185,7 +186,7 @@
 
   .plugin-config-overlay { @apply fixed inset-0 z-30 flex items-center justify-center p-6; animation: plugin-fade-in 0.2s ease-out; }
   .plugin-config-backdrop { @apply absolute inset-0 cursor-default border-0 bg-navy/[0.12] p-0 backdrop-blur-[4px]; }
-  .plugin-inspector { @apply relative z-10 flex max-h-[calc(100vh-4rem)] w-[min(760px,calc(100vw-3rem))] flex-col gap-4 overflow-y-auto pr-3 shadow-[0_32px_80px_rgba(16,33,73,0.25)]; overscroll-behavior: contain; scrollbar-gutter: stable; animation: plugin-pop-in 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+  .plugin-inspector { @apply relative z-10 flex max-h-[calc(100vh-4rem)] w-[min(760px,calc(100vw-3rem))] flex-col gap-4 shadow-[0_32px_80px_rgba(16,33,73,0.25)] scroll-area; animation: plugin-pop-in 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
   .pet-detail-inspector { @apply w-[min(900px,calc(100vw-3rem))]; }
   .pet-detail-content { @apply grid gap-5 grid-cols-[1.1fr_0.9fr] items-start; }
   .pet-detail-main { @apply flex flex-col gap-3; }
@@ -240,7 +241,7 @@
 
   .integration-grid { @apply grid grid-cols-2 gap-3.5 max-[850px]:grid-cols-1; }
   .integrations-layout { @apply flex flex-col gap-6 min-h-0 h-full; }
-  .integrations-content-card { @apply flex-1 min-h-0 overflow-y-auto pr-2; overscroll-behavior: contain; }
+  .integrations-content-card { @apply flex-1 min-h-0 scroll-area; }
   .integration-card { @apply flex min-h-[138px] flex-col justify-between rounded-2xl border border-blue-100/70 bg-white/70 p-0 text-left shadow-sm transition-[transform,border-color,background-color,box-shadow] active:scale-[0.96]; }
   .integration-card:hover { @apply border-brand/45 bg-white/90 shadow-md; }
   .integration-icon { @apply grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-blue-100/70 bg-blue-50/70 text-brand shadow-sm; }
@@ -257,7 +258,7 @@
   .dashboard-hero-pet { @apply relative z-10 flex shrink-0 items-center justify-center ml-6; }
   .dashboard-hero-pet .sprite-detail { filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.25)); }
 
-  .dashboard-content-card { @apply flex flex-col gap-6 flex-1 min-h-0 overflow-y-auto pr-2 pb-8; overscroll-behavior: contain; }
+  .dashboard-content-card { @apply flex flex-col gap-6 flex-1 min-h-0 scroll-area; }
   .dashboard-grid { @apply grid grid-cols-3 gap-5; }
   .dashboard-stat-card { @apply flex flex-col gap-4 rounded-[28px] border border-blue-100/50 bg-white/80 p-6 shadow-sm transition-[border-color,background-color,box-shadow] duration-150 hover:border-blue-200 hover:bg-white hover:shadow-md; }
   .dashboard-stat-header { @apply flex items-center gap-3; }

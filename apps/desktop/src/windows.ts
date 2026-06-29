@@ -1,5 +1,6 @@
 import { readFile, stat } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'url';
 
 import { app, BrowserWindow, dialog, ipcMain, protocol, shell, type IpcMainInvokeEvent, type OpenDialogOptions } from "electron";
 
@@ -55,7 +56,7 @@ function syncDockVisibilityForInternalUi(): void {
     const delayMs = elapsedSinceHide < dockHideShowCooldownMs ? dockHideShowCooldownMs - elapsedSinceHide : 0;
     pendingDockTimer = setTimeout(() => {
       pendingDockTimer = null;
-      dock.setIcon(createTrayIcon());
+      dock.setIcon(createAppIcon());
       dock.show();
     }, delayMs);
   } else {
@@ -717,9 +718,10 @@ export function openControlCenterWindow(route: ControlCenterRoute = "dashboard")
 
   trackDesktopEvent("desktop_control_center_opened", { route: safeRoute, entrypoint: "create_window" });
 
+
   const window = new BrowserWindow({
     title: "小灰狼桌宠控制中心",
-    icon: createTrayIcon(),
+    icon: createAppIcon(),
     width: 1180,
     height: 820,
     minWidth: 820,

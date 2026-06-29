@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="小灰狼桌宠" width="100%" />
+  <img src="assets/logo.png" alt="小灰狼桌宠" width="20%" />
 </p>
 
 <p align="center">
