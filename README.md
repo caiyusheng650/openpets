@@ -53,8 +53,8 @@
 
 | 版本 | 下载链接 |
 |------|----------|
-| 便携版 | [EDGZOO-WOLF-win-x64-portable.exe](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO_WOLF-win-x64-portable.exe) |
-| 安装版 | [EDGZOO-WOLF-win-x64-setup.exe](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO_WOLF-win-x64-setup.exe) |
+| 便携版 | [链接](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO_WOLF-win-x64-portable.exe) |
+| 安装版 | [链接](https://gh-proxy.org/https://github.com/caiyusheng650/openpets/releases/download/v1/EDGZOO_WOLF-win-x64-setup.exe) |
 
 ---
 
